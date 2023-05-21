@@ -23,7 +23,7 @@
     <div id="app">
 
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm" style="border-bottom:4px solid rgba(169, 217, 182, 0.637)">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm" style="border-bottom:4px solid rgb(59, 219, 19)">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <div class="logo_laravel">
