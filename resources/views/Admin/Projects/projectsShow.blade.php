@@ -33,13 +33,40 @@
     <div class="btn-wrapper col-12 m-4 d-flex flex-column justify-content-center align-items-center">
 
         <div class="edit-btn-wrapper  m-2">
-            <a href="{{route('admin.projects.edit', $project)}}" class="m-3 btn btn-success">Modifica</a>    
-            <a href="" class="m-3 btn btn-danger">Elimina</a>    
+            <a href="{{route('admin.projects.edit', $project)}}" class="m-3 btn btn-success">Modifica</a>   
+            {{-- ELIMINA  --}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Elimina</button>
+            
         </div>
 
         <a href="{{route('admin.projects.index')}}" class="btn px-4 py-2">Altri Progetti</a>
     </div>
 
+</div>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Elimina <strong>{{$project->title}}</strong> ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        L'eleminazione sarà permanente, sei sicuro di voler continuare?
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <form action="{{route('admin.projects.destroy', $project)}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button class="m-3 btn btn-danger" type="submit">Elimina</button>    
+        </form>
+        </div>
+    </div>
+    </div>
 </div>
 
 
