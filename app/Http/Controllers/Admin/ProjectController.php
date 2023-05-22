@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -27,7 +29,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('Admin/Projects/projectsCreate');
     }
 
     /**
@@ -38,7 +40,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validation($request);
+        $formProject = $request->all();
+        $newProject = new Project();
+        $newProject->fill($formProject);
+        $newProject->slug = Str::slug($newProject->title, '-');
+        $newProject->save();
+
+        return redirect()->route('admin.projects.show', $newProject);
     }
 
     /**
@@ -86,5 +95,20 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    private function validation(Request $request)
+    {
+        $formData = $request->all();
+        $validator = Validator::make($formData, [
+            'title' => 'required|max:150',
+            'description' => 'required',
+            'year' => 'nullable|max:4',
+        ], [
+            'title.required' => "Titolo necessario per continuare",
+            'title.max' => "Titolo troppo lungo, non deve superare i 150 caratteri",
+            'description.required' => "Descrizione necessaria per continuare"
+        ])->validate();
+        return $validator;
     }
 }
