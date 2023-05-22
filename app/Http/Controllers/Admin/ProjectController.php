@@ -71,7 +71,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.projectsEdit', compact('project'));
     }
 
     /**
@@ -83,7 +83,17 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        $this->validation($request);
+
+        $form_data = $request->all();
+
+        $project->update($form_data);
+        $project->slug = Str::slug($project->title, '-');
+
+
+        $project->save();
+
+        return redirect()->route('admin.projects.show', $project->slug);
     }
 
     /**
@@ -101,12 +111,13 @@ class ProjectController extends Controller
     {
         $formData = $request->all();
         $validator = Validator::make($formData, [
-            'title' => 'required|max:150',
+            'title' => 'required|unique:projects|max:150',
             'description' => 'required',
             'year' => 'nullable|max:4',
         ], [
             'title.required' => "Titolo necessario per continuare",
             'title.max' => "Titolo troppo lungo, non deve superare i 150 caratteri",
+            'title.unique' => "Titolo già presente nel database",
             'description.required' => "Descrizione necessaria per continuare"
         ])->validate();
         return $validator;

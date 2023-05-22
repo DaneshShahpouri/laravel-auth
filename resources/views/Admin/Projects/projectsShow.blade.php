@@ -33,11 +33,11 @@
     <div class="btn-wrapper col-12 m-4 d-flex flex-column justify-content-center align-items-center">
 
         <div class="edit-btn-wrapper  m-2">
-            <a href="">Modifica</a>    
-            <a href="">Elimina</a>    
+            <a href="{{route('admin.projects.edit', $project)}}" class="m-3 btn btn-success">Modifica</a>    
+            <a href="" class="m-3 btn btn-danger">Elimina</a>    
         </div>
 
-        <a href="{{route('admin.projects.index')}}" class="btn btn-primary px-4 py-2">Altri Progetti</a>
+        <a href="{{route('admin.projects.index')}}" class="btn px-4 py-2">Altri Progetti</a>
     </div>
 
 </div>
